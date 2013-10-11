@@ -1,0 +1,3 @@
+name = "VideoLinkEmbedder"
+description = "Converts YouTube and Vimeo URLs found in page content at render time into embedded Flash players."
+version = "2.0"

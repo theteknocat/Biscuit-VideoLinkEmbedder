@@ -4,7 +4,11 @@
  * embedded video player code. Provides a super simple way to embed videos without having to worry about RTE support or HTML purification stripping out the code.
  *
  * @package Modules
+ * @subpackage VideoLinkEmbedder
  * @author Peter Epp
+ * @copyright Copyright (c) 2009 Peter Epp (http://teknocat.org)
+ * @license GNU Lesser General Public License (http://www.gnu.org/licenses/lgpl.html)
+ * @version 1.0 $Id: controller.php 13982 2011-08-08 18:51:55Z teknocat $
  */
 class VideoLinkEmbedder extends AbstractModuleController {
 	/**
