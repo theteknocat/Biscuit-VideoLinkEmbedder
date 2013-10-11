@@ -25,10 +25,10 @@ class VideoLinkEmbedder extends AbstractModuleController {
 	 * @author Peter Epp
 	 */
 	public function run() {
-		if (defined('VIDEO_PLAYER_WIDTH')) {
+		if (defined('VIDEO_PLAYER_WIDTH') && (int)VIDEO_PLAYER_WIDTH > 0) {
 			$this->_player_width = (int)VIDEO_PLAYER_WIDTH;
 		}
-		if (defined('VIDEO_PLAYER_HEIGHT')) {
+		if (defined('VIDEO_PLAYER_HEIGHT') && (int)VIDEO_PLAYER_HEIGHT > 0) {
 			$this->_player_height = (int)VIDEO_PLAYER_HEIGHT;
 		}
 	}
@@ -131,10 +131,14 @@ class VideoLinkEmbedder extends AbstractModuleController {
 		// Ensure clean install
 		DB::query("DELETE FROM `module_pages` WHERE `module_id` = ?",$module_id);
 		DB::insert("INSERT INTO `module_pages` SET `module_id` = ?, `page_name` = '*', `is_primary` = 0",$module_id);
+		DB::query("REPLACE INTO `system_settings` (`constant_name`, `friendly_name`, `description`, `value`, `value_type`, `required`) VALUES
+		('VIDEO_PLAYER_WIDTH', 'Video Player Width', 'Should be set to the width of the content area in pixels. Defaults to 516 if left blank.', '', NULL, 0, 'Video Link Embedder'),
+		('VIDEO_PLAYER_HEIGHT', 'Video Player Height', 'Should be set to a height proportional to the width at a 16x9 widescreen ratio for best results. Defaults to 344 if left blank.', '', NULL, 0, 'Video Link Embedder')");
 	}
 	public static function uninstall_migration() {
 		$module_id = DB::fetch_one("SELECT `id` FROM `modules` WHERE `name` = 'VideoLinkEmbedder'");
 		DB::query("DELETE FROM `module_pages` WHERE `module_id` = ?",$module_id);
+		DB::query("DELETE FROM `system_settings` WHERE `constant_name` LIKE 'VIDEO_PLAYER_%'");
 	}
 }
 ?>
